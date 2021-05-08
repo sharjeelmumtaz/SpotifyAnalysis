@@ -1,0 +1,27 @@
+---
+title: "Spotify Dataset"
+author: "Sharjeel Khan"
+date: "5/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+--- 
+Instructions:
+
+1, Download the dataset zip (https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data_by_year_o.csv)
+2. Use the getwd() command to find the working and extract the CSV files from the zip into that directory
+3. run the read commands to see if RStudio reads the csv files.
+--- 
+    
+```{r}
+getwd()
+```
+Reading the genre data 
+```{r}
+genres <- read.csv("data_by_genres_o.csv")
+head(genres)
+```
