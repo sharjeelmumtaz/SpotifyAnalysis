@@ -12,7 +12,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(fivethirtyeight)
 library(ggplot2)
+library(dplyr)
 ```
+MATH 2820L: Final Paper (Dataset Analysis)
+Names: Sharjeel Khan, [], []
 
 --- 
 Instructions:
@@ -26,7 +29,7 @@ Instructions:
 getwd()
 ```
 
-Reading the genre data 
+First let's take a look at the day by genre file and study it. As we can see, it has all the genres of the music on Spotify and the ratings or qualities associated with the genre such as danceability, instrumentalness, and energy.
 
 ```{r}
 genres <- read.csv("data_by_genres_o.csv")
@@ -34,19 +37,54 @@ genres <- read.csv("data_by_genres_o.csv")
 head(genres)
 dim(genres)
 
-#Question: What determines a song's popularity?
+```
 
+Question: What determines a genre's popularity? Here we explores any potential correlation between a genre's popularity with the aforementioned qualities
+
+```{r}
 #Here we compare the different aspects of a song to it's popularity.
-ggplot(genres, aes(y = danceability, x = popularity )) + 
-    geom_point(color = "red", alpha = 0.2) + 
-    geom_abline(slope = 0.02, color = "black")
+ggplot(genres, aes(y = popularity, x = danceability )) + 
+    geom_point(color = "red", alpha = 0.2)
 
-ggplot(genres, aes(y = energy, x = popularity )) + 
-    geom_point(color = "red", alpha = 0.2) + 
-    geom_abline(slope = 0.02, color = "black")
+ggplot(genres, aes(y = popularity, x = energy )) + 
+    geom_point(color = "red", alpha = 0.2) 
 
-ggplot(genres, aes(y = instrumentalness, x = popularity )) + 
-    geom_point(color = "red", alpha = 0.2) + 
-    geom_abline(slope = 0.02, color = "black")
+ggplot(genres, aes(y = popularity , x = instrumentalness )) + 
+    geom_point(color = "red", alpha = 0.2) 
+
+ggplot(genres, aes(y = popularity , x = instrumentalness )) + 
+    geom_point(color = "red", alpha = 0.2) 
 
 ```
+
+From the graphs above, it appears that the studying the music by genre might not be the best way to do it, therefore, let us look at the dataset for individual songs and study it. 
+
+```{r}
+songs <- read.csv("data_o.csv")
+
+head(songs)
+dim(songs)
+
+```
+Scatterplots: 
+
+```{r}
+#Here we compare the different aspects of a song to it's popularity.
+ggplot(songs, aes(y = popularity, x = danceability )) + 
+    geom_point(color = "red", alpha = 0.2) +
+    geom_abline(intercept = 0, slope = 0.02, color = "blue")
+
+ggplot(songs, aes(y = popularity, x = energy )) + 
+    geom_point(color = "red", alpha = 0.2) +
+    geom_abline(intercept = 0, slope = 0.02, color = "blue")
+
+ggplot(songs, aes(y = popularity , x = instrumentalness )) + 
+    geom_point(color = "red", alpha = 0.2) +
+    geom_abline(intercept = 0, slope = 0.02, color = "blue")
+
+ggplot(songs, aes(y = popularity , x = instrumentalness )) + 
+    geom_point(color = "red", alpha = 0.2) +
+    geom_abline(intercept = 0, slope = 0.02, color = "blue")
+
+```
+
