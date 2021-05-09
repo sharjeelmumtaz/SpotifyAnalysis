@@ -9,6 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+library(fivethirtyeight)
+library(ggplot2)
+```
+
 --- 
 Instructions:
 
@@ -20,8 +25,28 @@ Instructions:
 ```{r}
 getwd()
 ```
+
 Reading the genre data 
+
 ```{r}
 genres <- read.csv("data_by_genres_o.csv")
+
 head(genres)
+dim(genres)
+
+#Question: What determines a song's popularity?
+
+#Here we compare the different aspects of a song to it's popularity.
+ggplot(genres, aes(y = danceability, x = popularity )) + 
+    geom_point(color = "red", alpha = 0.2) + 
+    geom_abline(slope = 0.02, color = "black")
+
+ggplot(genres, aes(y = energy, x = popularity )) + 
+    geom_point(color = "red", alpha = 0.2) + 
+    geom_abline(slope = 0.02, color = "black")
+
+ggplot(genres, aes(y = instrumentalness, x = popularity )) + 
+    geom_point(color = "red", alpha = 0.2) + 
+    geom_abline(slope = 0.02, color = "black")
+
 ```
