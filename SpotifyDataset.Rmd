@@ -32,10 +32,11 @@ getwd()
 First let's take a look at the day by genre file and study it. As we can see, it has all the genres of the music on Spotify and the ratings or qualities associated with the genre such as danceability, instrumentalness, and energy.
 
 ```{r}
-genres <- read.csv("data_by_genres_o.csv")
+genres <- read.csv("/Users/teddywagner/Desktop/MATH 2820/archive/data_by_genres_o.csv")
 
 head(genres)
 dim(genres)
+
 
 ```
 
@@ -60,7 +61,7 @@ ggplot(genres, aes(y = popularity , x = instrumentalness )) +
 From the graphs above, it appears that the studying the music by genre might not be the best way to do it, therefore, let us look at the dataset for individual songs and study it. 
 
 ```{r}
-songs <- read.csv("data_o.csv")
+songs <- read.csv("/Users/teddywagner/Desktop/MATH 2820/archive/data_o.csv")
 
 head(songs)
 dim(songs)
@@ -88,3 +89,69 @@ ggplot(songs, aes(y = popularity , x = instrumentalness )) +
 
 ```
 
+Different relationships involving genre vs. popularity and explicitness vs. popularity
+```{r}
+#Here we compare the different aspects of a song to it's popularity.
+genres1 <- genres %>%
+  filter(genres %in% c('hip hop', 'pop', 'trap', 'rock', 'k-pop', 'edm', 'alternative rock'))
+head(genres1)
+
+ggplot(genres1, aes(x = danceability, y = popularity, color = genres)) + 
+    geom_point(alpha = 1)
+
+songs1 <- songs %>%
+  mutate(explicit_song = (explicit == 1)) %>%
+  filter(release_date >= 2000)
+
+
+ggplot(songs1, aes(y = popularity, x = instrumentalness, color = explicit_song)) + 
+  geom_point(alpha = 0.4)
+
+```
+
+```{r}
+#Here we compare the different aspects of a song to it's popularity.
+
+songs2 <- songs1 %>%
+  filter(release_date %in% 2000:2021)
+
+
+ggplot(songs2, aes(y = popularity, x = danceability, color = explicit_song)) + 
+  geom_point(alpha = 0.5)
+
+ggplot(songs2, aes(x = popularity, fill = explicit_song)) + 
+    geom_density()  + 
+    facet_wrap( ~ explicit_song)
+
+ggplot(songs2, aes(x = popularity, fill = explicit_song)) + 
+    geom_histogram()  + 
+    facet_wrap( ~ explicit_song)
+
+ggplot(songs2, aes(x = loudness, fill = explicit_song)) + 
+    geom_density()  + 
+    facet_wrap( ~ explicit_song)
+
+songs3 <- songs %>%
+  filter(release_date %in% 1980:1999) %>%
+  mutate(explicit_song = (explicit == 1))
+
+
+ggplot(songs3, aes(y = popularity, x = danceability, color = explicit_song)) + 
+  geom_point(alpha = 0.5)
+
+songs3 <- songs %>%
+  filter(release_date %in% 1959:1979) %>%
+  mutate(explicit_song = (explicit == 1))
+
+
+ggplot(songs3, aes(y = popularity, x = danceability, color = explicit_song)) + 
+  geom_point(alpha = 0.5)
+
+songs4 <- songs1 %>%
+  mutate(year = 1 + (release_date>1970) + (release_date>1990))
+
+ggplot(songs4, aes(x = popularity, fill = explicit_song)) + 
+    geom_density(alpha = 0.5)  + 
+    facet_wrap( ~ year)
+
+```
