@@ -2,7 +2,9 @@
 title: "Spotify Dataset"
 author: "Sharjeel Khan"
 date: "5/8/2021"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -14,8 +16,12 @@ library(fivethirtyeight)
 library(ggplot2)
 library(dplyr)
 ```
+
 MATH 2820L: Final Paper (Dataset Analysis)
-Names: Sharjeel Khan, [], []
+
+Names: Sharjeel Khan, Teddy Wagner, Daniel Kim
+
+In this Paper, we attempt to take a closer look into the Spotify Analysis dataset
 
 --- 
 Instructions:
@@ -24,15 +30,16 @@ Instructions:
 2. Use the getwd() command to find the working and extract the CSV files from the zip into that directory
 3. run the read commands to see if RStudio reads the csv files.
 --- 
-    
+   
 ```{r}
 getwd()
 ```
 
 First let's take a look at the day by genre file and study it. As we can see, it has all the genres of the music on Spotify and the ratings or qualities associated with the genre such as danceability, instrumentalness, and energy.
 
+
 ```{r}
-genres <- read.csv("/Users/teddywagner/Desktop/MATH 2820/archive/data_by_genres_o.csv")
+genres <- read.csv("data_by_genres_o.csv")
 
 head(genres)
 dim(genres)
@@ -61,7 +68,7 @@ ggplot(genres, aes(y = popularity , x = instrumentalness )) +
 From the graphs above, it appears that the studying the music by genre might not be the best way to do it, therefore, let us look at the dataset for individual songs and study it. 
 
 ```{r}
-songs <- read.csv("/Users/teddywagner/Desktop/MATH 2820/archive/data_o.csv")
+songs <- read.csv("data_o.csv")
 
 head(songs)
 dim(songs)
@@ -155,3 +162,11 @@ ggplot(songs4, aes(x = popularity, fill = explicit_song)) +
     facet_wrap( ~ year)
 
 ```
+
+---
+
+Conclusion: 
+
+- To study such a vast dataset with so many different attributes, it would be better to split this table up and analyze it in smaller segments either in terms of genre or date of release, since these are the two are the most important determinants of how the music will sound. 
+- Such a large dataset that has music from a long period also reflects the changing nature of music itself; maybe that is why the trends were not as clear as one might expect. 
+- Similarly, the "measurements" such as danceability, energy, instrumentalness are not really intrinsic qualities, but more like ratings instead. Perhaps that could also provide some context to the nature of the data. 
